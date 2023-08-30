@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import Header from "./components/Header";
 import useHttp from './hooks/useHttp';
 
@@ -8,13 +8,10 @@ function App() {
 
   const [categories, setCategories] = useState([]);
 
-  const getCategories = (categories) => {
-    console.log(categories,"cat");
-    setCategories(categories)
-  }
+
   // const [isLoading, setIsLoading] = useState(false);
   // const [error, setError] = useState(null);
-  const { isLoading, error, sendRequest: fetchCategories } = useHttp({ url: 'http://localhost:3200/categories' }, getCategories)
+  const { isLoading, error, sendRequest: fetchCategories } = useHttp()
 
   // async function fetchCategories() {
   //   setIsLoading(true)
@@ -34,13 +31,18 @@ function App() {
 
   // }
   useEffect(() => {
-    fetchCategories()
-  }, [])
+    const getCategories = (categories) => {
+      console.log(categories, "cat");
+      setCategories(categories)
+    };
+    
+    fetchCategories({ url: 'http://localhost:3200/categories' },getCategories)
+  }, [fetchCategories])
 
   let content = <p>Found no data</p>;
 
   if (categories.length > 0) {
-   content=<div>{categories.map(c=><p>{c}</p>)}</div>
+    content = <div>{categories.map(c => <p>{c}</p>)}</div>
   }
 
   if (error) {
