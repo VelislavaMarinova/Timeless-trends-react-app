@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import useHttp from '../hooks/useHttp';
 import './Header.css'
@@ -28,7 +29,7 @@ const Header = () => {
             { id: 5, category: 'mens-watches' },
             { id: 6, category: 'womens-bags' }
         ];
-        content = <div>{chosenCategories.map(cat => <li key={cat.id} className='links'><a href='#'>{cat.category}</a></li>)}</div>
+        content = <div>{chosenCategories.map(cat => <li key={cat.id} className='links'><Link to={`products/${cat.category}`}>{cat.category}</Link></li>)}</div>
     }
 
     if (error) {
@@ -41,12 +42,12 @@ const Header = () => {
     return (<header className="header">
         <div className="header-account ">
             <div className="container ">
-                <div className="logo"><a routerLink="/">Timeless<strong>Trends</strong></a></div>
+                <div className="logo"><Link to={'/'}>Timeless<strong>Trends</strong></Link></div>
                 <ul className="header-login-register-cart-welcome">
                     <li ><i className="fa-solid fa-cart-shopping"></i><span className="cart-products">cartCount</span></li>
                     <li  ><i className="fa-solid fa-user"></i><span className="header-welcome"> Welcomeusername</span></li>
-                    <li ><a routerLink="/auth/login">Login</a></li>
-                    <li ><a routerLink="/auth/register">Register</a></li>
+                    <li ><Link to="/auth/login">Login</Link></li>
+                    <li ><Link to="/auth/register">Register</Link></li>
                     <li className="header-logout-btn"><button className="logout-btn">Logout</button></li>
                 </ul>
             </div>
