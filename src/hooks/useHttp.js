@@ -1,15 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-const useHttp = (initialUrl) => {
+const useHttp = (url) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [url, setUrl] = useState(initialUrl);
-  // const [controller, setController] = useState(new AbortController());
-
-  const updateUrl = (newUrl) => {
-    setUrl(newUrl);
-  };
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -18,9 +12,6 @@ const useHttp = (initialUrl) => {
       setIsLoading(true);
       setError(null);
       
-      // setController(abortController);
-
-
       try {
         const response = await fetch(url,{ signal: abortController.signal } );
         if (!response.ok) {
@@ -43,9 +34,9 @@ const useHttp = (initialUrl) => {
     return ()=>{
       abortController.abort()
     }
-  }, [url]);//controller
+  }, [url]);
 
-  return {data, isLoading,error,updateUrl}
+  return {data, isLoading,error,url}
 
 }
 
