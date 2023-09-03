@@ -5,21 +5,23 @@ import useHttp from '../hooks/useHttp';
 import './Header.css'
 
 const Header = () => {
+    const url = 'http://localhost:3200/categories'
+    const {data, error,isLoading}=useHttp(url)
+    console.log(data);
+// console.log("header");    const [categories, setCategories] = useState([]);
+//     const { isLoading, error, sendRequest: fetchCategories } = useHttp();
 
-    const [categories, setCategories] = useState([]);
-    const { isLoading, error, sendRequest: fetchCategories } = useHttp();
+//     useEffect(() => {
+//         const getCategories = (categories) => {
+//             setCategories(categories)
+//         }
 
-    useEffect(() => {
-        const getCategories = (categories) => {
-            setCategories(categories)
-        }
-
-        fetchCategories({ url: 'http://localhost:3200/categories' }, getCategories)
-    }, [fetchCategories]);
+//         fetchCategories({ url: 'http://localhost:3200/categories' }, getCategories)
+//     }, [fetchCategories]);
 
     let content = <p>Found no data</p>;
 
-    if (categories.length > 0) {
+    if (data.length > 0) {
         //TODO number of categories
         let chosenCategories = [
             { id: 1, category: 'sunglasses' },

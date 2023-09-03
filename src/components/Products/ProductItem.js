@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import './ProductItem.css'
 
 const ProductItem=(props)=>{
-   console.log(props);
+//    console.log(props);
     return(<>
     <Link
         to="/products/{{product.category}}/{{product.id}}"
