@@ -109,10 +109,12 @@
     background-color: var(--color-paynesgray);
     color: white;
   }
-  
-  .product-list-cards button.disabled-button {
+  .product-list-cards button:disabled{
+
     pointer-events: none;
     opacity: 0.6;
+  }
+  .product-list-cards button.disabled-button {
   }
   
   @media (max-width: 1024px) {

@@ -1,33 +1,52 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-const useHttp = () => {
-
+const useHttp = (initialUrl) => {
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [url, setUrl] = useState(initialUrl);
+  // const [controller, setController] = useState(new AbortController());
 
-  const sendRequest = useCallback(async (requestCongig, applyData) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(requestCongig.url, {
-        method: requestCongig.method ? requestCongig.method : "GET",
-        headers: requestCongig.headers ? requestCongig.headers : {},
-        body: requestCongig.body ? JSON.stringify(requestCongig.body) : null,
-      });
+  const updateUrl = (newUrl) => {
+    setUrl(newUrl);
+  };
 
-      if (!response.ok) {
-        throw new Error("Request failed")
+  useEffect(() => {
+    const abortController = new AbortController();
+    const fetchData = async () => {
+
+      setIsLoading(true);
+      setError(null);
+      
+      // setController(abortController);
+
+
+      try {
+        const response = await fetch(url,{ signal: abortController.signal } );
+        if (!response.ok) {
+          throw new Error("Something went wrong");
+        }
+
+        const responseData = await response.json();
+        setData(responseData);
+      } catch (error) {
+       
+          setError(error.message || "An error occoured.");
+        
+      }finally{
+        setIsLoading(false);
       }
-      const data = await response.json();
 
-      applyData(data);
-      setIsLoading(false);
-
-    } catch (error) {
-      setError(error.message || "Something went wrong");
     }
-  }, []);
+    fetchData();
 
-  return { isLoading, error, sendRequest }
+    return ()=>{
+      abortController.abort()
+    }
+  }, [url]);//controller
+
+  return {data, isLoading,error,updateUrl}
+
 }
+
 export default useHttp;

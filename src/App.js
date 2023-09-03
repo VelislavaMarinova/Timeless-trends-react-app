@@ -19,7 +19,7 @@ function App() {
 
       <Header></Header>
       <Routes>  
-         <Route path="products/:category" element={<ProductsList />} />
+         {/* <Route path="products/:category" element={<ProductsList />} /> */}
       </Routes>
      
 
