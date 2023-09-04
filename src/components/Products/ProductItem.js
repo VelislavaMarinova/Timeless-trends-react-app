@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import './ProductItem.css'
 import { useEffect, useState } from "react";
 import ProductRating from "./ProductRating";
+import ProductPrice from "./ProductPrice";
 
 const ProductItem = ({ product }) => {
     console.log(product);
@@ -17,21 +18,17 @@ const ProductItem = ({ product }) => {
             });
             setProductRating(Number((totalRating / product.reviews.length).toFixed(2)))
             console.log(productRating, "productRating");
-           // productRating = Number((productRating / product.reviews.length).toFixed(2))
+            // productRating = Number((productRating / product.reviews.length).toFixed(2))
             setGoldStars(Array(Math.round(productRating))
-            .fill(null))
+                .fill(null))
             setBlueStars(Array(5 - Math.round(productRating))
-            .fill(null))
-            //  goldStars = new Array(Math.round(productRating));
-            //  blueStars = new Array(5 - Math.round(productRating));
-
+                .fill(null))
         } else {
-            setBlueStars(Array(5).fill(null)) 
+            setBlueStars(Array(5).fill(null))
         }
     }, [product.reviews, productRating])
 
-    // console.log(blueStars, "blueStars");
-    // console.log(goldStars, "goldStars");
+ 
 
     return (<>
         <Link
@@ -43,25 +40,18 @@ const ProductItem = ({ product }) => {
             <div className="product-info">
                 <h4 className="product-title">{product.title}</h4>
                 <p className="product-description">{product.description}</p>
-                <div className="product-discount">
+                <ProductPrice price={product.price} discountPercentage={product.discountPercentage}></ProductPrice>
 
-                    <p className="product-discount-percentage"><span className="product-price"> -discountPercentage%</span></p>
-                    <p className="product-old-price">
-                        {product.price}$</p>
-                    <p className="product-price">priceAfterDiscount$</p>
-                </div>
-                <div >
-                    <p className="product-price">price$</p>
-                </div>
 
             </div>
         </Link>
         <div className="product-rating">
-       <ProductRating
-        blueStars={blueStars} 
-        goldStars={goldStars} 
-        productRating={productRating}
-        numRatings={product.reviews.length}></ProductRating>
+            <ProductRating
+                blueStars={blueStars}
+                goldStars={goldStars}
+                productRating={productRating}
+                numRatings={product.reviews.length}>
+            </ProductRating>
         </div>
         <button className="product-btn">
             <i className="fa-solid fa-cart-shopping"></i>
