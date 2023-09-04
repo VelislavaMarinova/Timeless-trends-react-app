@@ -17,9 +17,9 @@ function App() {
   return (
     <div>
 
-      <Header></Header>
+      <Header ></Header>
       <Routes>  
-         {/* <Route path="products/:category" element={<ProductsList />} /> */}
+         <Route path="products/:category" element={<ProductsList />} />
       </Routes>
      
 
