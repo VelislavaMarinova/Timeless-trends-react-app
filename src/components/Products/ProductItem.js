@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import './ProductItem.css'
 import { useEffect, useState } from "react";
+import ProductRating from "./ProductRating";
 
 const ProductItem = ({ product }) => {
     console.log(product);
@@ -56,18 +57,11 @@ const ProductItem = ({ product }) => {
             </div>
         </Link>
         <div className="product-rating">
-            <span>
-            {goldStars
-      .map((_, index) => (
-        <i key={`goldStar${index}`} className="fa-solid fa-star gold"></i>
-      ))}
-    {blueStars
-      .map((_, index) => (
-        <i key={`blueStar${index}`} className="fa-solid fa-star"></i>
-      ))}
-                {productRating}
-            </span>
-            <span>({product.reviews.length})</span>
+       <ProductRating
+        blueStars={blueStars} 
+        goldStars={goldStars} 
+        productRating={productRating}
+        numRatings={product.reviews.length}></ProductRating>
         </div>
         <button className="product-btn">
             <i className="fa-solid fa-cart-shopping"></i>
