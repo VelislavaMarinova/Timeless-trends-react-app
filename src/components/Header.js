@@ -31,7 +31,7 @@ const Header = () => {
             { id: 5, category: 'mens-watches' },
             { id: 6, category: 'womens-bags' }
         ];
-        content = <div>{chosenCategories.map(cat => <li key={cat.id} className='links'><Link to={`products/${cat.category}`}>{cat.category}</Link></li>)}</div>
+        content = <div>{chosenCategories.map(cat => <li key={cat.id} className='links'><Link to={`products/${cat.category}`} >{cat.category}</Link></li>)}</div>
     }
 
     if (error) {
